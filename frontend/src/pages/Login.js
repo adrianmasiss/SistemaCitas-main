@@ -1,108 +1,107 @@
-// Login.js
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-export default function Login() {
-    const [showModal, setShowModal] = useState(false);
-    const [user, setUser] = useState({ username: '', clave: '' });
-    const [error, setError] = useState('');
+const Login = () => {
     const navigate = useNavigate();
-    const location = useLocation();
+    const [form, setForm] = useState({ username: '', password: '' });
+    const [error, setError] = useState('');
+    const [logout, setLogout] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
-    const params = new URLSearchParams(location.search);
-    const logout = params.get('logout');
-    const loginError = params.get('error');
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setError('');
-        try {
-            const res = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username: user.username, clave: user.clave })
-            });
-            if (res.status === 401) return setError('Usuario o contraseña inválidos.');
-            if (!res.ok) throw new Error(await res.text());
-            const data = await res.json();
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('rol', data.rol);
-            localStorage.setItem('nombre', data.nombre);
-            if (data.rol === 'ADMIN') navigate('/admin/medicos');
-            else if (data.rol === 'MEDICO') navigate('/medico/gestionCitas');
-            else navigate('/buscarCita');
-        } catch (err) {
-            setError('Hubo un error inesperado. Intenta de nuevo.');
-        }
+
+        fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: form.username, clave: form.password }) // Ajuste para backend
+        })
+            .then(res => {
+                if (res.status === 200) return res.json();
+                else throw new Error('Usuario o contraseña inválidos');
+            })
+            .then(data => {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('rol', data.rol);
+                localStorage.setItem('usuarioId', data.usuarioId);
+                if (data.rol === 'MEDICO') navigate('/medico/gestionCitas');
+                else if (data.rol === 'PACIENTE') navigate('/buscar');
+                else navigate('/admin/medicosPendientes');
+            })
+            .catch(err => setError(err.message));
     };
 
     return (
-        <div className="login-bg">
-            <div className="login-center">
-                <div className="login-card">
-                    <h2 className="login-title">Login</h2>
-                    <img
-                        src="/images/194_210_MjAyMC0wNS0wNiAwNzoyMDoxOQ==_dummy-male-img-1.png"
-                        alt="User Icon"
-                        className="login-avatar"
-                    />
-                    <form onSubmit={handleSubmit}>
-                        <div className="input-group">
-                            <span className="input-icon"><i className="fa fa-user"></i></span>
-                            <input
-                                type="text"
-                                name="username"
-                                placeholder="User id"
-                                required
-                                value={user.username}
-                                onChange={e => setUser({...user, username: e.target.value})}
-                                autoFocus
-                            />
+        <div className="layout-wrapper">
+            {/* HEADER lo maneja App.js */}
+
+            <div className="contenido-principal">
+                <div className="login-wrapper">
+                    <div className="login-box">
+                        <h2>Login</h2>
+                        <img
+                            src="/images/194_210_MjAyMC0wNS0wNiAwNzoyMDoxOQ==_dummy-male-img-1.png"
+                            alt="User Icon"
+                            className="login-avatar"
+                        />
+
+                        <form onSubmit={handleSubmit}>
+                            <div className="input-group">
+                                <span className="input-icon"><i className="fa fa-user"></i></span>
+                                <input
+                                    type="text"
+                                    name="username"
+                                    value={form.username}
+                                    onChange={handleChange}
+                                    placeholder="User id"
+                                    required
+                                />
+                            </div>
+                            <div className="input-group">
+                                <span className="input-icon"><i className="fa fa-key"></i></span>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={form.password}
+                                    onChange={handleChange}
+                                    placeholder="User Password"
+                                    required
+                                />
+                            </div>
+
+                            {error && <div className="error-msg">{error}</div>}
+                            {logout && <div className="logout-msg">Has cerrado sesión correctamente.</div>}
+
+                            <button type="submit" className="btn-primary">Log in</button>
+                        </form>
+
+                        <div className="register-link">
+                            <p>Don't have an account?
+                                <span className="register-text" onClick={() => setShowModal(true)}> Register here</span>
+                            </p>
                         </div>
-                        <div className="input-group">
-                            <span className="input-icon"><i className="fa fa-key"></i></span>
-                            <input
-                                type="password"
-                                name="clave"
-                                placeholder="User Password"
-                                required
-                                value={user.clave}
-                                onChange={e => setUser({...user, clave: e.target.value})}
-                            />
-                        </div>
-                        {error && <div className="error-msg">{error}</div>}
-                        {loginError && <div className="error-msg">Usuario o contraseña inválidos.</div>}
-                        {logout && <div className="logout-msg">Has cerrado sesión correctamente.</div>}
-                        <button type="submit" className="btn-primary">Log in</button>
-                    </form>
-                    <div className="register-link">
-                        <p>Don't have an account?{' '}
-                            <span className="register-text" onClick={() => setShowModal(true)}>Register here</span>
-                        </p>
                     </div>
                 </div>
             </div>
 
-            {/* Footer flotante fijo abajo */}
-            <footer className="footer-login">
-                <div className="footer-login-icons">
-                    <i className="fab fa-twitter"></i>
-                    <i className="fab fa-facebook-f"></i>
-                    <i className="fab fa-instagram"></i>
-                </div>
-            </footer>
+            {/* FOOTER lo maneja App.js */}
 
-            {/* MODAL */}
-            {showModal &&
-                <div className="modal" style={{ display: 'block' }}>
-                    <div className="modal-registro">
+            {showModal && (
+                <div id="modalRegistro" className="modal" onClick={() => setShowModal(false)}>
+                    <div className="modal-registro" onClick={(e) => e.stopPropagation()}>
                         <h3>Registrarse como:</h3>
-                        <button className="modal-btn" onClick={() => navigate('/registroPaciente')}>Paciente</button>
-                        <button className="modal-btn" onClick={() => navigate('/registroMedico')}>Médico</button>
+                        <a href="/registroPaciente" className="modal-btn">Paciente</a>
+                        <a href="/registroMedico" className="modal-btn">Médico</a>
                         <button className="modal-cancel" onClick={() => setShowModal(false)}>Cancelar</button>
                     </div>
                 </div>
-            }
+            )}
         </div>
     );
-}
+};
+
+export default Login;
