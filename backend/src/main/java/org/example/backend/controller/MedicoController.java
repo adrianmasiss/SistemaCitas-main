@@ -18,4 +18,12 @@ public class MedicoController {
     public List<Usuario> listarMedicosAprobados() {
         return usuarioService.buscarTodosLosMedicosAprobados();
     }
+
+    // Opcional: buscar con filtros especialidad/ciudad
+    @GetMapping("/buscar")
+    public List<Usuario> buscarMedicos(
+            @RequestParam(required = false) String especialidad,
+            @RequestParam(required = false) String ciudad) {
+        return usuarioService.buscarMedicos(especialidad, ciudad);
+    }
 }

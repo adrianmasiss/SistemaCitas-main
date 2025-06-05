@@ -1,9 +1,10 @@
 package org.example.backend.seguridad;
 
+import org.example.backend.config.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import jakarta.servlet.FilterChain;
@@ -19,7 +20,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private JwtUtils jwtUtils;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -31,7 +32,12 @@ public class JwtFilter extends OncePerRequestFilter {
         }
         if (token != null && jwtUtils.validateJwt(token)) {
             String username = jwtUtils.getUsernameFromJwt(token);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(username, null, null);
+
+            // Carga el usuario y establece la autenticación
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities()
+            );
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         chain.doFilter(request, response);

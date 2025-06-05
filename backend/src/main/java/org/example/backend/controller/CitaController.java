@@ -1,13 +1,13 @@
 package org.example.backend.controller;
 
-import org.example.backend.dto.EspacioCitaDTO;
+import org.example.backend.entidad.Cita;
 import org.example.backend.entidad.Usuario;
-import org.example.backend.servicio.HorarioService;
+import org.example.backend.servicio.CitaService;
 import org.example.backend.servicio.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -15,19 +15,28 @@ import java.util.List;
 public class CitaController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private CitaService citaService;
     @Autowired
-    private HorarioService horarioService;
+    private UsuarioService usuarioService;
 
-    // Buscar médicos y espacios disponibles
-    @GetMapping("/buscar")
-    public List<EspacioCitaDTO> buscarCita(
-            @RequestParam(required = false) String especialidad,
-            @RequestParam(required = false) String ciudad,
-            @RequestParam(defaultValue = "3") int dias) {
+    // Agendar (crear) una nueva cita
+    @PostMapping("/agendar")
+    public ResponseEntity<?> agendar(@RequestBody Cita cita) {
+        citaService.agendarCita(cita);
+        return ResponseEntity.ok("Cita agendada");
+    }
 
-        List<Usuario> medicos = usuarioService.buscarMedicos(especialidad, ciudad);
-        LocalDate hoy = LocalDate.now().plusDays(1);
-        return horarioService.espaciosMedicosParaFechas(medicos, hoy, dias);
+    // Listar citas por médico
+    @GetMapping("/medico/{medicoId}")
+    public List<Cita> citasPorMedico(@PathVariable Long medicoId) {
+        Usuario medico = usuarioService.buscarPorId(medicoId).orElse(null);
+        return citaService.listarCitasPorMedico(medico);
+    }
+
+    // Listar citas por paciente
+    @GetMapping("/paciente/{pacienteId}")
+    public List<Cita> citasPorPaciente(@PathVariable Long pacienteId) {
+        Usuario paciente = usuarioService.buscarPorId(pacienteId).orElse(null);
+        return citaService.listarCitasPorPaciente(paciente);
     }
 }

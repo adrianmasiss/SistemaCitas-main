@@ -20,6 +20,7 @@ public class HorarioService {
     @Autowired
     private CitaRepository citaRepository;
 
+    // Calcular espacios disponibles para los próximos N días de un médico
     public List<EspacioDTO> calcularNdias(Usuario medico, LocalDate inicio, int cantidadDias) {
         if (medico == null) return Collections.emptyList();
         List<Horario> horarios = horarioRepository.findByMedico(medico);
@@ -27,7 +28,7 @@ public class HorarioService {
         List<EspacioDTO> espacios = new ArrayList<>();
         for (int i = 0; i < cantidadDias; i++) {
             LocalDate fecha = inicio.plusDays(i);
-            String diaSemana = fecha.getDayOfWeek().name();
+            String diaSemana = fecha.getDayOfWeek().name(); // Ejemplo: MONDAY
             for (Horario h : horarios) {
                 if (!h.getDiaSemana().equalsIgnoreCase(diaSemana)) continue;
                 LocalTime horaActual = h.getHoraInicio();
@@ -42,6 +43,7 @@ public class HorarioService {
         return espacios;
     }
 
+    // Genera una lista de EspacioCitaDTO para todos los médicos en un rango de días
     public List<EspacioCitaDTO> espaciosMedicosParaFechas(List<Usuario> medicos, LocalDate inicio, int dias) {
         List<EspacioCitaDTO> resultado = new ArrayList<>();
         for (Usuario medico : medicos) {
@@ -51,5 +53,18 @@ public class HorarioService {
             }
         }
         return resultado;
+    }
+
+    public List<Horario> listarHorariosPorMedico(Usuario medico) {
+        if (medico == null) return Collections.emptyList();
+        return horarioRepository.findByMedico(medico);
+    }
+
+    public Horario crearHorario(Horario horario) {
+        return horarioRepository.save(horario);
+    }
+
+    public void eliminarHorario(Long id) {
+        horarioRepository.deleteById(id);
     }
 }

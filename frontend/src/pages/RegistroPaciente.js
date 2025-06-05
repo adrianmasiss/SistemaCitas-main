@@ -46,6 +46,7 @@ export default function RegistroPaciente() {
 
     return (
         <div className="layout-wrapper">
+            <Header />
             <div className="contenido-principal">
                 <div className="form-container register-box">
                     <h1>Registro de <span className="txt-paciente">Paciente</span></h1>
@@ -75,6 +76,7 @@ export default function RegistroPaciente() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

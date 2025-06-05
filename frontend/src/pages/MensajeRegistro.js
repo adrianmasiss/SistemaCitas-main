@@ -11,6 +11,7 @@ export default function MensajeRegistro() {
 
     return (
         <div className="layout-wrapper">
+            <Header />
             <div className="contenido-principal">
                 <div className="mensaje-container">
                     <div className="card-exito" style={{
@@ -49,6 +50,7 @@ export default function MensajeRegistro() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
