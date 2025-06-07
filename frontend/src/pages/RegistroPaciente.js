@@ -46,7 +46,10 @@ export default function RegistroPaciente() {
 
     return (
         <div className="layout-wrapper">
+<<<<<<< HEAD
             <Header />
+=======
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
             <div className="contenido-principal">
                 <div className="form-container register-box">
                     <h1>Registro de <span className="txt-paciente">Paciente</span></h1>
@@ -76,7 +79,10 @@ export default function RegistroPaciente() {
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <Footer />
+=======
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
         </div>
     );
 }
