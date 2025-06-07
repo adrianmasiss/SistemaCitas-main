@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = ({ usuario }) => {
-    const rol = usuario?.rol;
-    const usuarioId = usuario?.usuarioId;
+    const rol = usuario?.rol || localStorage.getItem('rol');
+    const usuarioId = usuario?.usuarioId || localStorage.getItem('usuarioId');
 
     return (
         <div className="header">
@@ -56,7 +56,7 @@ const Header = ({ usuario }) => {
                 {/* Si ha iniciado sesión como ADMIN */}
                 {rol === 'ADMIN' && (
                     <div className="menu-rol">
-                        <Link to="/admin/medicosPendientes">👨‍⚕️ Admin Médicos</Link>
+                        <Link to="/admin/medicos">👨‍⚕️ Admin Médicos</Link>
                         <form action="/logout" method="post" style={{ display: "inline" }}>
                             <button type="submit" className="logout-btn">🚪 Cerrar sesión</button>
                         </form>

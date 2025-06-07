@@ -29,6 +29,7 @@ export default function Login() {
             localStorage.setItem('token', data.token);
             localStorage.setItem('rol', data.rol);
             localStorage.setItem('nombre', data.nombre);
+            if (data.usuarioId) localStorage.setItem('usuarioId', data.usuarioId);
 
             if (data.rol === 'ADMIN') navigate('/admin/medicos');
             else if (data.rol === 'MEDICO') navigate('/medico/gestionCitas');

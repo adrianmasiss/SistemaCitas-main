@@ -12,9 +12,9 @@ import AdminMedicos from "./pages/AdminMedicos";
 import GestionCitasMedico from "./pages/gestionCitasMedico";
 
 function App() {
-    // Simulación de sesión
-    const rol = 'PACIENTE';
-    const usuarioId = 1;
+    // Obtener datos de sesión almacenados
+    const rol = localStorage.getItem('rol');
+    const usuarioId = localStorage.getItem('usuarioId');
 
     return (
         <Router>
