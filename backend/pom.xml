@@ -42,13 +42,6 @@
 			<version>8.0.33</version>
 			<scope>runtime</scope>
 		</dependency>
-<<<<<<< HEAD
-		<!-- JWT -->
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
-=======
 		<!-- JWT: versión moderna, compatible con Java 17+ y Spring Boot 3+ -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -66,7 +59,6 @@
 			<artifactId>jjwt-jackson</artifactId> <!-- Usa Jackson para serializar/deserializar JWT -->
 			<version>0.11.5</version>
 			<scope>runtime</scope>
->>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
 		</dependency>
 		<!-- Devtools (opcional, para recarga en caliente) -->
 		<dependency>
@@ -81,11 +73,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
-		<!-- Servlet API (opcional, solo si tienes código personalizado que lo requiera) -->
-=======
 		<!-- Servlet API (opcional) -->
->>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
 		<dependency>
 			<groupId>jakarta.servlet</groupId>
 			<artifactId>jakarta.servlet-api</artifactId>

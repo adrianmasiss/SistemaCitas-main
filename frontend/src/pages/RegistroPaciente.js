@@ -20,24 +20,29 @@ export default function RegistroPaciente() {
     const handleSubmit = async e => {
         e.preventDefault();
         setError('');
+
         if (!datos.nombre || !datos.username || !datos.clave || !datos.confirmClave) {
             setError('Todos los campos son obligatorios.');
             return;
         }
+
         if (datos.clave !== datos.confirmClave) {
             setError('Las contraseñas no coinciden.');
             return;
         }
+
         try {
             const res = await fetch('/api/auth/registerPaciente', {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(datos)
             });
+
             if (!res.ok) {
                 setError(await res.text());
                 return;
             }
+
             navigate('/mensajeRegistro?rol=PACIENTE');
         } catch (err) {
             setError('Hubo un error. Intenta de nuevo.');
@@ -46,29 +51,49 @@ export default function RegistroPaciente() {
 
     return (
         <div className="layout-wrapper">
-<<<<<<< HEAD
-            <Header />
-=======
->>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
             <div className="contenido-principal">
                 <div className="form-container register-box">
                     <h1>Registro de <span className="txt-paciente">Paciente</span></h1>
                     <form onSubmit={handleSubmit}>
                         <label>Nombre completo:</label>
-                        <input type="text" name="nombre" required placeholder="Tu nombre completo"
-                               value={datos.nombre} onChange={handleChange} />
+                        <input
+                            type="text"
+                            name="nombre"
+                            required
+                            placeholder="Tu nombre completo"
+                            value={datos.nombre}
+                            onChange={handleChange}
+                        />
 
                         <label>Nombre de usuario:</label>
-                        <input type="text" name="username" required placeholder="Usuario para iniciar sesión"
-                               value={datos.username} onChange={handleChange} />
+                        <input
+                            type="text"
+                            name="username"
+                            required
+                            placeholder="Usuario para iniciar sesión"
+                            value={datos.username}
+                            onChange={handleChange}
+                        />
 
                         <label>Contraseña:</label>
-                        <input type="password" name="clave" required placeholder="Contraseña"
-                               value={datos.clave} onChange={handleChange} />
+                        <input
+                            type="password"
+                            name="clave"
+                            required
+                            placeholder="Contraseña"
+                            value={datos.clave}
+                            onChange={handleChange}
+                        />
 
                         <label>Confirmar contraseña:</label>
-                        <input type="password" name="confirmClave" required placeholder="Repite la contraseña"
-                               value={datos.confirmClave} onChange={handleChange} />
+                        <input
+                            type="password"
+                            name="confirmClave"
+                            required
+                            placeholder="Repite la contraseña"
+                            value={datos.confirmClave}
+                            onChange={handleChange}
+                        />
 
                         {error && <div className="error">{error}</div>}
                         <button type="submit" className="btn-primary">Registrarse</button>
@@ -79,10 +104,6 @@ export default function RegistroPaciente() {
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <Footer />
-=======
->>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
         </div>
     );
 }
