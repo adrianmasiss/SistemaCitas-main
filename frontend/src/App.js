@@ -7,7 +7,9 @@ import BuscarCita from './pages/BuscarCita';
 import Login from './pages/Login';
 import RegistroMedico from './pages/RegistroMedico';
 import MensajeRegistro from "./pages/MensajeRegistro";
-import RegistroPaciente from "./pages/RegistroPaciente"; // 👈 AGREGA ESTA LÍNEA
+import RegistroPaciente from "./pages/RegistroPaciente";
+import AdminMedicos from "./pages/AdminMedicos";
+import GestionCitasMedico from "./pages/gestionCitasMedico";
 
 function App() {
     // Simulación de sesión
@@ -16,15 +18,18 @@ function App() {
 
     return (
         <Router>
-            <Header rol={rol} usuarioId={usuarioId} />
+            <Header usuario={{ rol, usuarioId }} />
             <main>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/buscar" element={<BuscarCita />} />
+                    <Route path="/buscarCita" element={<BuscarCita />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/registroMedico" element={<RegistroMedico />} />
                     <Route path="/registroPaciente" element={<RegistroPaciente />} />
                     <Route path="/MensajeRegistro" element={<MensajeRegistro />} />
+                    <Route path="/admin/adminMedicos" element={<AdminMedicos />} />
+                    <Route path="/medico/gestionCitas" element={<GestionCitasMedico />} />
                     {/* Aquí irán más páginas */}
                 </Routes>
             </main>
