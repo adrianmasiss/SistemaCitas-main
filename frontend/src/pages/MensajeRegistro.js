@@ -11,7 +11,10 @@ export default function MensajeRegistro() {
 
     return (
         <div className="layout-wrapper">
+<<<<<<< HEAD
             <Header />
+=======
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
             <div className="contenido-principal">
                 <div className="mensaje-container">
                     <div className="card-exito" style={{
@@ -50,7 +53,10 @@ export default function MensajeRegistro() {
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <Footer />
+=======
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
         </div>
     );
 }

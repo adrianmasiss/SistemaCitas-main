@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+=======
+// Login.js
+import React, { useState } from 'react';
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Login() {
@@ -10,12 +15,18 @@ export default function Login() {
     const navigate = useNavigate();
     const location = useLocation();
 
+<<<<<<< HEAD
     // Mostrar mensajes de logout/error usando query params
+=======
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
     const params = new URLSearchParams(location.search);
     const logout = params.get('logout');
     const loginError = params.get('error');
 
+<<<<<<< HEAD
     // Login submit
+=======
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -28,7 +39,10 @@ export default function Login() {
             if (res.status === 401) return setError('Usuario o contraseña inválidos.');
             if (!res.ok) throw new Error(await res.text());
             const data = await res.json();
+<<<<<<< HEAD
             // Guarda el token y redirige según el rol (puedes ajustar la lógica)
+=======
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
             localStorage.setItem('token', data.token);
             localStorage.setItem('rol', data.rol);
             localStorage.setItem('nombre', data.nombre);
@@ -41,6 +55,7 @@ export default function Login() {
     };
 
     return (
+<<<<<<< HEAD
         <div className="layout-wrapper">
             <Header />
             <div className="contenido-principal">
@@ -90,6 +105,62 @@ export default function Login() {
                 </div>
             </div>
             <Footer />
+=======
+        <div className="login-bg">
+            <div className="login-center">
+                <div className="login-card">
+                    <h2 className="login-title">Login</h2>
+                    <img
+                        src="/images/194_210_MjAyMC0wNS0wNiAwNzoyMDoxOQ==_dummy-male-img-1.png"
+                        alt="User Icon"
+                        className="login-avatar"
+                    />
+                    <form onSubmit={handleSubmit}>
+                        <div className="input-group">
+                            <span className="input-icon"><i className="fa fa-user"></i></span>
+                            <input
+                                type="text"
+                                name="username"
+                                placeholder="User id"
+                                required
+                                value={user.username}
+                                onChange={e => setUser({...user, username: e.target.value})}
+                                autoFocus
+                            />
+                        </div>
+                        <div className="input-group">
+                            <span className="input-icon"><i className="fa fa-key"></i></span>
+                            <input
+                                type="password"
+                                name="clave"
+                                placeholder="User Password"
+                                required
+                                value={user.clave}
+                                onChange={e => setUser({...user, clave: e.target.value})}
+                            />
+                        </div>
+                        {error && <div className="error-msg">{error}</div>}
+                        {loginError && <div className="error-msg">Usuario o contraseña inválidos.</div>}
+                        {logout && <div className="logout-msg">Has cerrado sesión correctamente.</div>}
+                        <button type="submit" className="btn-primary">Log in</button>
+                    </form>
+                    <div className="register-link">
+                        <p>Don't have an account?{' '}
+                            <span className="register-text" onClick={() => setShowModal(true)}>Register here</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Footer flotante fijo abajo */}
+            <footer className="footer-login">
+                <div className="footer-login-icons">
+                    <i className="fab fa-twitter"></i>
+                    <i className="fab fa-facebook-f"></i>
+                    <i className="fab fa-instagram"></i>
+                </div>
+            </footer>
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
 
             {/* MODAL */}
             {showModal &&
