@@ -11,6 +11,10 @@ export default function MensajeRegistro() {
 
     return (
         <div className="layout-wrapper">
+<<<<<<< HEAD
+            <Header />
+=======
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
             <div className="contenido-principal">
                 <div className="mensaje-container">
                     <div className="card-exito" style={{
@@ -23,7 +27,6 @@ export default function MensajeRegistro() {
                         textAlign: 'center'
                     }}>
                         <h1 style={{ color: "#2c3e50", marginBottom: "1rem" }}>🎉 ¡Registro exitoso!</h1>
-
                         {rol === 'PACIENTE' ? (
                             <p style={{ fontSize: "1.1rem", color: "#333" }}>
                                 Tu cuenta ha sido creada correctamente.<br />
@@ -35,7 +38,6 @@ export default function MensajeRegistro() {
                                 Un administrador debe aprobar tu cuenta antes de que puedas acceder al sistema.
                             </p>
                         ) : null}
-
                         <button
                             className="btn-volver-login"
                             style={{
@@ -47,12 +49,14 @@ export default function MensajeRegistro() {
                                 fontWeight: "bold"
                             }}
                             onClick={() => navigate('/login')}
-                        >
-                            🔐 Volver al Login
-                        </button>
+                        >🔐 Volver al Login</button>
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
+            <Footer />
+=======
+>>>>>>> f8eaa34 (Falta ahora conectar bien el tema de la base de datos)
         </div>
     );
 }
