@@ -3,8 +3,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-// Endpoint backend
-const API_URL = '/api/horarios/extendido';
+// Path fixed to match backend controller
+const API_URL = '/api/horario-extendido';
 
 export default function HorarioExtendido() {
     const [params] = useSearchParams();

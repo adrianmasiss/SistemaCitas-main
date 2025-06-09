@@ -26,21 +26,29 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                // No usamos CSRF porque es una API REST (sin sesiones)
                 .csrf(csrf -> csrf.disable())
+                // Configuración de endpoints públicos (puedes ajustar según lo que tu frontend necesita)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/auth/**",
+                                "/api/auth/**",            // login, registro y refresh token
                                 "/api/registro/**",
-                                "/api/citas/buscar",
-                                "/api/medicos/aprobados",
-                                "/api/medicos/buscar",    // <-- Aquí
+                                "/api/citas/buscar",       // búsqueda pública
+                                "/api/medicos/aprobados",  // listado público de médicos
+                                "/api/medicos/buscar",     // búsqueda pública de médicos
+                                "/api/horarios/medico/**",
+                                "/api/horario-extendido/**",
                                 "/api/home",
                                 "/static/**",
                                 "/css/**", "/js/**", "/images/**"
                         ).permitAll()
+                        // El resto requiere autenticación (token JWT válido)
                         .anyRequest().authenticated()
                 )
+                // Sin sesiones, stateless
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        // Filtro JWT para validar tokens en cada request
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
