@@ -11,6 +11,7 @@ import RegistroPaciente from "./pages/RegistroPaciente";
 import AdminMedicos from "./pages/AdminMedicos";
 import GestionCitasMedico from "./pages/gestionCitasMedico";
 
+
 function App() {
     // Simulación de sesión
     const rol = 'PACIENTE';
@@ -22,7 +23,7 @@ function App() {
             <main>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/buscar" element={<BuscarCita />} />
+                    <Route path="/buscarCita" element={<BuscarCita />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/registroMedico" element={<RegistroMedico />} />
                     <Route path="/registroPaciente" element={<RegistroPaciente />} />

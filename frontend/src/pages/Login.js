@@ -29,6 +29,8 @@ export default function Login() {
             localStorage.setItem('token', data.token);
             localStorage.setItem('rol', data.rol);
             localStorage.setItem('nombre', data.nombre);
+            // Guardar el identificador del usuario para usarlo en otras vistas
+            localStorage.setItem('usuarioId', data.usuarioId);
 
             if (data.rol === 'ADMIN') navigate('/admin/medicos');
             else if (data.rol === 'MEDICO') navigate('/medico/gestionCitas');

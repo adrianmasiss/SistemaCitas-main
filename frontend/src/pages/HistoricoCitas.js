@@ -3,8 +3,9 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigate } from 'react-router-dom';
 
-// Cambia el endpoint a tu backend
-const API_URL = '/api/paciente/citas';
+const usuarioId = localStorage.getItem('usuarioId');
+// Endpoint para obtener el historial del paciente logueado
+const API_URL = `/api/historico-citas/paciente/${usuarioId}`;
 
 export default function HistoricoCitas() {
     const [citas, setCitas] = useState([]);
@@ -20,7 +21,8 @@ export default function HistoricoCitas() {
             let query = [];
             if (estado) query.push(`estado=${estado}`);
             if (medico) query.push(`medico=${encodeURIComponent(medico)}`);
-            const res = await fetch(`${API_URL}?${query.join('&')}`, {
+            const url = query.length ? `${API_URL}?${query.join('&')}` : API_URL;
+            const res = await fetch(url, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
             if (!res.ok) throw new Error("Error al cargar el historial");
