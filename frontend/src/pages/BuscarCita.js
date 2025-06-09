@@ -27,18 +27,15 @@ function BuscarCita() {
                 const baseDate = new Date();
                 let horariosMap = {};
                 for (let medico of data) {
-                    const response = await fetch(`/api/horarios/medico/${medico.id}`);
+                    const response = await fetch(`/api/horario-extendido/${medico.id}?offset=1&dias=3`);
                     if (!response.ok) throw new Error(await response.text());
                     const ct2 = response.headers.get('content-type') || '';
                     const slots = ct2.includes('application/json') ? await response.json() : [];
-                    // Solo slots de los próximos 3 días
-                    const now = new Date();
+                    // Agrupar slots por fecha
                     let fechas = {};
-                    for (let i = 1; i <= 3; i++) {
-                        const d = new Date(now);
-                        d.setDate(now.getDate() + i);
-                        const fechaStr = d.toISOString().slice(0, 10);
-                        fechas[fechaStr] = slots.filter(s => s.fecha === fechaStr);
+                    for (const slot of slots) {
+                        const f = slot.fecha;
+                        if (!fechas[f]) fechas[f] = [];
                     }
                     horariosMap[medico.id] = fechas;
                 }

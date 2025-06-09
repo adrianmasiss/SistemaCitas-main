@@ -10,6 +10,7 @@ import MensajeRegistro from "./pages/MensajeRegistro";
 import RegistroPaciente from "./pages/RegistroPaciente";
 import AdminMedicos from "./pages/AdminMedicos";
 import GestionCitasMedico from "./pages/gestionCitasMedico";
+import HorarioExtendido from "./pages/HorarioExtendido";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                     <Route path="/MensajeRegistro" element={<MensajeRegistro />} />
                     <Route path="/admin/medicos" element={<AdminMedicos />} />
                     <Route path="/medico/gestionCitas" element={<GestionCitasMedico />} />
+                    <Route path="/horarioExtendido" element={<HorarioExtendido />} />
 
                     {/* Aquí irán más páginas */}
                 </Routes>

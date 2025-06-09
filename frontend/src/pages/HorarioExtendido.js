@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-// Path fixed to match backend controller
+// Base URL del controlador en el backend
 const API_URL = '/api/horario-extendido';
 
 export default function HorarioExtendido() {
@@ -16,23 +16,34 @@ export default function HorarioExtendido() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Llama a tu backend y trae info de médico y los horarios del offset actual
         const fetchData = async () => {
-            const res = await fetch(`${API_URL}?medicoId=${medicoId}&offset=${offset}`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-            });
+            // Cargar información del médico
+            const medRes = await fetch(`/api/perfil/${medicoId}`);
+            if (medRes.ok) {
+                const medData = await medRes.json();
+                setMedico(medData);
+            }
+
+            // Cargar espacios disponibles desde el controlador correspondiente
+            const res = await fetch(`${API_URL}/${medicoId}?offset=${offset}&dias=7`);
             if (!res.ok) return;
-            const data = await res.json();
-            setMedico(data.medico || {});
-            setEspacios(data.espaciosAgrupados || []);
-        };
+            const data = await res.json(); // Lista de EspacioDTO
+
+            // Agrupar por fecha para la vista
+            const map = {};
+            for (const slot of data) {
+                const f = slot.fecha;
+                if (!map[f]) map[f] = { fecha: f, slots: [] };
+                map[f].slots.push(slot);
+            }
+            setEspacios(Object.values(map));
+            };
         fetchData();
         // eslint-disable-next-line
     }, [medicoId, offset]);
 
     return (
         <div>
-            <Header />
             <div className="horario-ext-card">
                 {/* Navegación y médico */}
                 <div className="fila-superior">
@@ -101,7 +112,6 @@ export default function HorarioExtendido() {
             <div className="volver-container" style={{ textAlign: "center", marginTop: "2rem" }}>
                 <button className="btn-volver-ext" onClick={() => navigate('/buscarCita')}>← Volver a buscar</button>
             </div>
-            <Footer />
         </div>
     );
 }
