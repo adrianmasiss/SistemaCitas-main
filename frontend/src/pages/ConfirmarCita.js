@@ -27,7 +27,12 @@ export default function ConfirmarCita() {
                 }),
             });
             if (!res.ok) throw new Error(await res.text());
-            const data = await res.json();
+            const ct = res.headers.get('content-type') || '';
+            if (ct.includes('application/json')) {
+                await res.json();
+            } else {
+                await res.text();
+            }
             // Redirige pasando datos de cita y médico
             navigate('/citaConfirmada', { state: { cita: { fechaHora }, medico: { id: medicoId, nombre: medicoNombre, foto: medicoFoto, localidad: ubicacion } } });
         } catch (err) {

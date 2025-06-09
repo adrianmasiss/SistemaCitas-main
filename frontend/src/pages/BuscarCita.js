@@ -16,7 +16,11 @@ function BuscarCita() {
         if (especialidad) url += `especialidad=${encodeURIComponent(especialidad)}&`;
         if (ciudad) url += `ciudad=${encodeURIComponent(ciudad)}`;
         fetch(url)
-            .then(res => res.json())
+            .then(async res => {
+                if (!res.ok) throw new Error(await res.text());
+                const ct = res.headers.get('content-type') || '';
+                return ct.includes('application/json') ? res.json() : [];
+            })
             .then(async data => {
                 setMedicos(data);
                 // Cargar horarios solo para los médicos encontrados (para próximos 3 días)
@@ -24,7 +28,9 @@ function BuscarCita() {
                 let horariosMap = {};
                 for (let medico of data) {
                     const response = await fetch(`/api/horarios/medico/${medico.id}`);
-                    const slots = await response.json();
+                    if (!response.ok) throw new Error(await response.text());
+                    const ct2 = response.headers.get('content-type') || '';
+                    const slots = ct2.includes('application/json') ? await response.json() : [];
                     // Solo slots de los próximos 3 días
                     const now = new Date();
                     let fechas = {};
@@ -38,6 +44,11 @@ function BuscarCita() {
                 }
                 setHorarios(horariosMap);
                 setLoading(false);
+            })
+            .catch(err => {
+                alert('Error al buscar médicos: ' + err.message);
+                setLoading(false);
+                setMedicos([]);
             });
     };
 

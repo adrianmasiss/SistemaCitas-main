@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/citas")
@@ -23,7 +24,7 @@ public class CitaController {
     @PostMapping("/agendar")
     public ResponseEntity<?> agendar(@RequestBody Cita cita) {
         citaService.agendarCita(cita);
-        return ResponseEntity.ok("Cita agendada");
+        return ResponseEntity.ok(Map.of("mensaje", "Cita agendada"));
     }
 
     // Listar citas por médico
