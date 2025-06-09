@@ -9,7 +9,7 @@ import RegistroMedico from './pages/RegistroMedico';
 import MensajeRegistro from "./pages/MensajeRegistro";
 import RegistroPaciente from "./pages/RegistroPaciente";
 import AdminMedicos from "./pages/AdminMedicos";
-import gestionCitasMedico from "./pages/gestionCitasMedico";
+import GestionCitasMedico from "./pages/gestionCitasMedico";
 
 function App() {
     // Simulación de sesión
@@ -28,7 +28,7 @@ function App() {
                     <Route path="/registroPaciente" element={<RegistroPaciente />} />
                     <Route path="/MensajeRegistro" element={<MensajeRegistro />} />
                     <Route path="/admin/medicos" element={<AdminMedicos />} />
-                    <Route path="/medico/gestionCitas" element={<gestionCitasMedico />} />
+                    <Route path="/medico/gestionCitas" element={<GestionCitasMedico />} />
 
                     {/* Aquí irán más páginas */}
                 </Routes>

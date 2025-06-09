@@ -60,7 +60,6 @@ export default function GestionCitasMedico() {
 
     return (
         <div className="layout-wrapper">
-            <Header />
             <div className="contenido-principal">
                 <div className="contenedor-citas">
                     <h1 style={{ textAlign: "center", color: "#2c3e50" }}>📋 Gestión de Citas</h1>
@@ -130,7 +129,6 @@ export default function GestionCitasMedico() {
                     )}
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }
