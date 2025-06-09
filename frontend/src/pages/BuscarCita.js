@@ -27,15 +27,14 @@ function BuscarCita() {
                 const baseDate = new Date();
                 let horariosMap = {};
                 for (let medico of data) {
-                    const response = await fetch(`/api/horario-extendido/${medico.id}?offset=1&dias=3`);
-                    if (!response.ok) throw new Error(await response.text());
+                    const response = await fetch(`/api/horario-extendido?medicoId=${medico.id}&offset=1&dias=3`);                    if (!response.ok) throw new Error(await response.text());
                     const ct2 = response.headers.get('content-type') || '';
-                    const slots = ct2.includes('application/json') ? await response.json() : [];
+                    const obj = ct2.includes('application/json') ? await response.json() : {};
+                    const grupos = obj.espaciosAgrupados || [];
                     // Agrupar slots por fecha
                     let fechas = {};
-                    for (const slot of slots) {
-                        const f = slot.fecha;
-                        if (!fechas[f]) fechas[f] = [];
+                    for (const g of grupos) {
+                        fechas[g.fecha] = g.slots || [];
                     }
                     horariosMap[medico.id] = fechas;
                 }

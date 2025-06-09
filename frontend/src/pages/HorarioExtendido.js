@@ -17,27 +17,13 @@ export default function HorarioExtendido() {
 
     useEffect(() => {
         const fetchData = async () => {
-            // Cargar información del médico
-            const medRes = await fetch(`/api/perfil/${medicoId}`);
-            if (medRes.ok) {
-                const medData = await medRes.json();
-                setMedico(medData);
-            }
-
-            // Cargar espacios disponibles desde el controlador correspondiente
-            const res = await fetch(`${API_URL}/${medicoId}?offset=${offset}&dias=7`);
+            const res = await fetch(`${API_URL}?medicoId=${medicoId}&offset=${offset}&dias=7`);
             if (!res.ok) return;
-            const data = await res.json(); // Lista de EspacioDTO
+            const data = await res.json();
+            setMedico(data.medico || {});
+            setEspacios(data.espaciosAgrupados || []);
+        };
 
-            // Agrupar por fecha para la vista
-            const map = {};
-            for (const slot of data) {
-                const f = slot.fecha;
-                if (!map[f]) map[f] = { fecha: f, slots: [] };
-                map[f].slots.push(slot);
-            }
-            setEspacios(Object.values(map));
-            };
         fetchData();
         // eslint-disable-next-line
     }, [medicoId, offset]);
