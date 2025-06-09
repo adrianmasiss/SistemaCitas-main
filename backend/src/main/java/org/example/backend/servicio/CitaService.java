@@ -52,4 +52,12 @@ public class CitaService {
                         || (c.getMedico() != null && c.getMedico().getNombre().toLowerCase().contains(nombreMedico.toLowerCase())))
                 .toList();
     }
+
+    public List<Cita> buscarCitasMedicoFiltradas(Usuario medico, String estado, String nombrePaciente) {
+        return citaRepository.findByMedicoOrderByFechaHoraDesc(medico).stream()
+                .filter(c -> estado == null || estado.isEmpty() || c.getEstado().equalsIgnoreCase(estado))
+                .filter(c -> nombrePaciente == null || nombrePaciente.isEmpty()
+                        || (c.getPaciente() != null && c.getPaciente().getNombre().toLowerCase().contains(nombrePaciente.toLowerCase())))
+                .toList();
+    }
 }

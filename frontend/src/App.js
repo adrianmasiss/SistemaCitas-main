@@ -7,7 +7,9 @@ import BuscarCita from './pages/BuscarCita';
 import Login from './pages/Login';
 import RegistroMedico from './pages/RegistroMedico';
 import MensajeRegistro from "./pages/MensajeRegistro";
-import RegistroPaciente from "./pages/RegistroPaciente"; // 👈 AGREGA ESTA LÍNEA
+import RegistroPaciente from "./pages/RegistroPaciente";
+import AdminMedicos from "./pages/AdminMedicos";
+import gestionCitasMedico from "./pages/gestionCitasMedico";
 
 function App() {
     // Simulación de sesión
@@ -25,6 +27,9 @@ function App() {
                     <Route path="/registroMedico" element={<RegistroMedico />} />
                     <Route path="/registroPaciente" element={<RegistroPaciente />} />
                     <Route path="/MensajeRegistro" element={<MensajeRegistro />} />
+                    <Route path="/admin/medicos" element={<AdminMedicos />} />
+                    <Route path="/medico/gestionCitas" element={<gestionCitasMedico />} />
+
                     {/* Aquí irán más páginas */}
                 </Routes>
             </main>

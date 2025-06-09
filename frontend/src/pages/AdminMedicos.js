@@ -23,7 +23,7 @@ export default function AdminMedicos() {
 
     const aprobarMedico = async (id) => {
         try {
-            const res = await fetch(`/api/admin/aprobarMedico/${id}`, {
+            const res = await fetch(`/api/admin/aprobar?medicoId=${id}`, {
                 method: 'POST',
                 headers: { "Authorization": "Bearer " + localStorage.getItem('token') }
             });
@@ -40,7 +40,6 @@ export default function AdminMedicos() {
 
     return (
         <div className="layout-wrapper">
-            <Header />
             <div className="contenido-principal">
                 <div className="contenedor">
                     <h1 style={{textAlign:"center", color:"#2c3e50", marginBottom:"1rem"}}>
@@ -85,7 +84,6 @@ export default function AdminMedicos() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }
